@@ -124,7 +124,7 @@ public class MediatorContaCorrente {
 		if (mensagem == null) {
 			boolean retorno = dao.alterar(conta);
 			if(!retorno) {
-				return "Conta não existe";
+				return CONTA_NAO_EXISTENTE;
 			}else {
 				return null;
 			}
@@ -136,7 +136,7 @@ public class MediatorContaCorrente {
 	String excluir(int agencia, String numero) {
 		boolean retorno = dao.excluir(ContaCorrente.obterChave(agencia, numero));
 		if(!retorno) {
-			return "Conta não existente";
+			return CONTA_NAO_EXISTENTE;
 		}
 		return null;
 	}
