@@ -11,7 +11,7 @@ import br.edu.cesarschool.next.poo.projetoreferencia.utils.Registro;
 import br.edu.cesarschool.next.poo.projetoreferencia.utils.StringUtils;
 
 public class MediatorContaCorrente {
-	
+	private static final String CONTA_NAO_EXISTENTE = "Conta não existe";
 	private DAOGenerico dao = new DAOGenerico(ContaCorrente.class);
 	
 	private String validar(double valor, int agencia, String numero) {
@@ -21,7 +21,7 @@ public class MediatorContaCorrente {
 	private String validar(ContaCorrente conta) {
 		
 		if (conta == null) {
-			return "Conta Corrente não informada";
+			return CONTA_NAO_EXISTENTE;
 		}
 		
 		if (conta.getAgencia() < 1 || conta.getAgencia() > 1000) {
@@ -57,7 +57,7 @@ public class MediatorContaCorrente {
 		}
 		boolean sucesso = dao.incluir(conta);
 		if(!sucesso) {
-			return "Conta já existe";
+			return CONTA_NAO_EXISTENTE;
 		}
 		return null;
 	}
@@ -69,14 +69,14 @@ public class MediatorContaCorrente {
 	
 	public String creditar(double valor, int agencia, String numero) {
 		
-		String msg = validar(valor, agencia, numero);
-		if (msg != null) {
-			return msg;
+		String mensagem = validar(valor, agencia, numero);
+		if (mensagem != null) {
+			return mensagem;
 		}
 		ContaCorrente conta = (ContaCorrente) buscar(agencia, numero);
 		
 		if (conta == null) {
-			return "Conta não encontrada";
+			return CONTA_NAO_EXISTENTE;
 		}
 		if(valor < 0) {
 			return "Valor inválido";
@@ -86,17 +86,23 @@ public class MediatorContaCorrente {
 		}
 		
 		conta.creditar(valor);
-
+		if(!dao.alterar(conta)) {
+			return CONTA_NAO_EXISTENTE;
+		}
 		return null;
 	}
 	
 	
 	public String debitar(double valor, int agencia , String numero) {
 		
+		String msg = validar(valor, agencia, numero);
+		if (msg != null) {
+			return msg;
+		}
 		ContaCorrente conta = (ContaCorrente) buscar(agencia, numero);
 		
 		if (conta == null) {
-			return "Conta não encontrada";
+			return "Conta não existe";
 		}
 		
 		if(valor < 0) {
@@ -107,7 +113,31 @@ public class MediatorContaCorrente {
 		}
 		
 		conta.debitar(valor);
-				
+		if(!dao.alterar(conta)) {
+			return "Conta não existe";
+		}
+		return null;
+	}
+	
+	String alterar(ContaCorrente conta) {
+		String mensagem = validar(conta);
+		if (mensagem == null) {
+			boolean retorno = dao.alterar(conta);
+			if(!retorno) {
+				return "Conta não existe";
+			}else {
+				return null;
+			}
+		}else {
+			return mensagem;
+		}
+	}
+	
+	String excluir(int agencia, String numero) {
+		boolean retorno = dao.excluir(ContaCorrente.obterChave(agencia, numero));
+		if(!retorno) {
+			return "Conta não existente";
+		}
 		return null;
 	}
 }
