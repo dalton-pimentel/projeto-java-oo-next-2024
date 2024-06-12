@@ -22,6 +22,10 @@ public class ContaCorrente extends Registro{
 		this.saldo = saldo;
 	}
 		
+	public ContaCorrente(int agencia2, String numero2, double saldo2, String nomeCorrentista2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	// Método para creditar saldo na conta
 	public void creditar(double valor) {
 			saldo += valor;

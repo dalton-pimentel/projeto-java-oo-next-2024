@@ -11,6 +11,10 @@ public class ContaPoupanca extends ContaCorrente {
 		this.percentualBonus = percentualBonus;
 	}
 	
+	public ContaPoupanca(int agencia, String numero, double saldo, String nomeCorrentista, double percentualBonus2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void creditar(double valor) {
 		super.creditar(valor * (1 + percentualBonus / 100));
