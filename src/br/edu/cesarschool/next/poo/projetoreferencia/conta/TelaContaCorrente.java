@@ -44,7 +44,8 @@ public class TelaContaCorrente {
 		System.out.println("É uma Conta Poupança? (S/N)");
 		String contaPoupanca = entrada.next();
 		if(contaPoupanca.equals(SIM)) {
-			
+			System.out.println("Valor do bonus: ");
+			double percentualBonus = entrada.nextDouble();
 		}
 	}
 }
