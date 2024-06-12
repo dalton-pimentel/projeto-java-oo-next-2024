@@ -4,34 +4,21 @@ import java.util.Comparator;
 
 import br.edu.cesarschool.next.poo.projetoreferencia.produto.Produto;
 
-public class ComparadorContaCorrenteSaldo implements Comparator {
-
-	public ComparadorContaCorrenteSaldo() {
-	}
-
-
+public class ComparadorContaCorrenteSaldo implements Comparator<ContaCorrente> {
 	
-	
-	
+	@Override
 	public int compare(ContaCorrente o1, ContaCorrente o2) {
-		if(o1.getSaldo() > o2.getSaldo()) {
+		double saldo1 = o1.getSaldo();
+		double saldo2 = o2.getSaldo();
+		
+		if(saldo1 > saldo2) {
 			return 1;
 		}
-		if(o1.getSaldo() < o2.getSaldo()) {
+		else if(saldo1 < saldo1) {
 			return -1;
 		}else {
 			return 0;
 		}
-	}
-
-
-	@Override
-	public int compare(Object o1, Object o2) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	
-	
-	
+			
+	}	
 }

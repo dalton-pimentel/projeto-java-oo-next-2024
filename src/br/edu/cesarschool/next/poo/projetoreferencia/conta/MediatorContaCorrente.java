@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import br.edu.cesarschool.next.poo.projetoreferencia.produto.Produto;
-import br.edu.cesarschool.next.poo.projetoreferencia.produto.ProdutoCestaBasica;
 import br.edu.cesarschool.next.poo.projetoreferencia.utils.DAOGenerico;
 import br.edu.cesarschool.next.poo.projetoreferencia.utils.Registro;
 import br.edu.cesarschool.next.poo.projetoreferencia.utils.StringUtils;
@@ -139,5 +137,17 @@ public class MediatorContaCorrente {
 			return CONTA_NAO_EXISTENTE;
 		}
 		return null;
+	}
+	
+	public List<ContaCorrente> gerarRelatorio(){
+		List<ContaCorrente> conta = new ArrayList<ContaCorrente>();
+		Registro[] arrayRegistro = dao.buscarTodos();
+		if(arrayRegistro != null) {
+			for(int i = 0; i<arrayRegistro.length;i++) {			
+				conta.add((ContaCorrente)arrayRegistro[i]);
+			}
+			Collections.sort(conta, new ComparadorContaCorrenteSaldo());
+		}
+		return conta;
 	}
 }
